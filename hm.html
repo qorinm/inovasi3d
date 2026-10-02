@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesmen Formatif Scaffolded-Box: Dimensi Tiga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    colors: {
+                        tealBrand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.95; }
+        }
+        .highlight-pulse {
+            animation: pulse-subtle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header Area -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 bg-teal-600 text-white rounded-xl shadow-sm">
+                        <i class="fa-solid fa-cube text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-teal-600 bg-teal-50 px-2 py-0.5 rounded-md">Asesmen Formatif Digital</span>
+                        <h1 class="text-lg font-bold text-slate-900 leading-tight">Dimensi Tiga: Jarak Titik ke Garis</h1>
+                    </div>
+                </div>
+
+                <!-- Metrics & Quick Info -->
+                <div class="flex items-center space-x-3 sm:space-x-6 text-sm">
+                    <!-- Progress Bar -->
+                    <div class="flex flex-col min-w-[140px] sm:min-w-[180px]">
+                        <div class="flex justify-between text-xs font-medium text-slate-600 mb-1">
+                            <span>Kemajuan</span>
+                            <span id="progressText" class="font-bold text-teal-700">0 / 4 Step</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-slate-200">
+                            <div id="progressBar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-500 w-0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Hint Counter -->
+                    <div class="flex items-center space-x-2 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-lg">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-base"></i>
+                        <div class="text-xs">
+                            <span class="block text-[10px] uppercase font-semibold text-amber-600 leading-none">Hint Dipakai</span>
+                            <span id="hintCountBadge" class="font-bold text-sm leading-none">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Status Tag -->
+                    <div id="statusBadge" class="bg-slate-100 text-slate-700 border border-slate-200 text-xs px-2.5 py-1.5 rounded-lg font-medium flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span>Belum Selesai</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left Side: Context & Interactive 3D Cube Visualizer (Sticky on Desktop) -->
+            <section class="lg:col-span-5 lg:sticky lg:top-20 space-y-4">
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-teal-600"></i>
+                            Stimulus Soal Utama
+                        </h2>
+                        <span class="bg-slate-100 text-slate-600 text-xs font-mono px-2 py-0.5 rounded">Kubus ABCD.EFGH</span>
+                    </div>
+
+                    <!-- Problem Text -->
+                    <div class="bg-teal-50/60 border border-teal-100 rounded-xl p-4 text-slate-700 text-sm leading-relaxed">
+                        <p class="font-medium text-slate-900 mb-1">Soal:</p>
+                        <p>Diberikan kubus <span class="font-bold text-teal-800">ABCD.EFGH</span> dengan panjang rusuk <span class="font-bold text-teal-800">s = 6 cm</span>. Hitunglah jarak dari <span class="font-bold text-rose-600">titik F</span> ke <span class="font-bold text-blue-600">garis AC</span>!</p>
+                    </div>
+
+                    <!-- Canvas Visualization Box -->
+                    <div class="bg-slate-900 rounded-xl p-3 relative overflow-hidden shadow-inner flex flex-col items-center">
+                        <div class="absolute top-3 left-3 text-xs text-slate-400 font-mono flex items-center gap-1.5 z-10">
+                            <i class="fa-solid fa-arrows-spin text-teal-400"></i> Visualisasi Kubus 3D
+                        </div>
+                        
+                        <!-- Toggle Overlay Helpers -->
+                        <div class="absolute top-3 right-3 flex gap-1 z-10">
+                            <button id="toggleTriBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-2.5 py-1 rounded border border-slate-700 transition flex items-center gap-1">
+                                <i class="fa-solid fa-draw-polygon text-amber-400"></i> Δ FAC
+                            </button>
+                            <button id="resetRotBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-2 py-1 rounded border border-slate-700 transition" title="Reset Pandangan">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+
+                        <!-- Canvas Element -->
+                        <canvas id="cubeCanvas" class="w-full h-64 sm:h-72 cursor-grab active:cursor-grabbing rounded-lg"></canvas>
+
+                        <!-- Visual Helper Guide Below Canvas -->
+                        <div class="w-full mt-2 pt-2 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between items-center px-1">
+                            <span><i class="fa-solid fa-hand-pointer text-slate-500"></i> Drag mouse/sentuh untuk merotasi</span>
+                            <div class="flex items-center space-x-3">
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Titik F</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500 inline-block"></span> Garis AC</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span> Garis FO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Reference Formula Accordion -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <button id="accordionToggle" class="w-full bg-slate-50 hover:bg-slate-100 p-3 text-left text-xs font-semibold text-slate-700 flex justify-between items-center transition">
+                            <span class="flex items-center gap-2">
+                                <i class="fa-solid fa-bookmark text-teal-600"></i> CATATAN KONSEP KUNCI
+                            </span>
+                            <i id="accordionIcon" class="fa-solid fa-chevron-down text-slate-400"></i>
+                        </button>
+                        <div id="accordionContent" class="hidden p-3 bg-white text-xs text-slate-600 space-y-2 border-t border-slate-200">
+                            <p><strong class="text-slate-800">1. Diagonal Sisi Kubus:</strong> Rusuk $s \rightarrow d = s\sqrt{2}$</p>
+                            <p><strong class="text-slate-800">2. Diagonal Ruang Kubus:</strong> Rusuk $s \rightarrow d_r = s\sqrt{3}$</p>
+                            <p><strong class="text-slate-800">3. Proyeksi Tegak Lurus:</strong> Jarak titik ke garis adalah panjang ruas garis terpendek dari titik ke garis tersebut (tegak lurus / siku-siku).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Scaffolded-Box Steps & Assessment Flow -->
+            <section class="lg:col-span-7 space-y-5">
+
+                <!-- STEP 1 BOX -->
+                <div id="box-step-1" class="step-card bg-white rounded-2xl border-2 border-teal-500 shadow-md p-5 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                        <div class="flex items-center space-x-3">
+                            <span class="step-badge w-8 h-8 rounded-xl bg-teal-600 text-white font-bold flex items-center justify-center text-sm shadow-sm">1</span>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Box 1: Identifikasi Segitiga Bantuan & Jenisnya</h3>
+                                <p class="text-xs text-slate-500">Menganalisis panjang sisi pembentuk segitiga FAC</p>
+                            </div>
+                        </div>
+                        <span id="badge-status-1" class="bg-teal-50 text-teal-700 border border-teal-200 text-xs px-2.5 py-1 rounded-md font-semibold">Sedang Dikerjakan</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Hubungkan titik <span class="font-bold text-rose-600">F</span> ke titik <span class="font-bold text-blue-600">A</span> dan titik <span class="font-bold text-blue-600">C</span> untuk membentuk segitiga bantuan <span class="font-bold text-amber-600">FAC</span>. 
+                            Berapakah panjang FA, FC, dan AC, serta jenis segitiga apakah <span class="font-bold text-amber-600">FAC</span>?
+                        </p>
+
+                        <!-- Input Section -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Pilih Pernyataan Sisi & Jenis Segitiga yang Tepat:</label>
+                            
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-start space-x-3 p-2.5 bg-white border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                                    <input type="radio" name="q1_option" value="opt1" class="mt-0.5 text-teal-600 focus:ring-teal-500">
+                                    <span class="text-slate-700">FA, FC, dan AC adalah diagonal sisi ($6\sqrt{2}$ cm). Segitiga FAC adalah <strong>Segitiga Sama Sisi</strong>.</span>
+                                </label>
+                                <label class="flex items-start space-x-3 p-2.5 bg-white border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                                    <input type="radio" name="q1_option" value="opt2" class="mt-0.5 text-teal-600 focus:ring-teal-500">
+                                    <span class="text-slate-700">FA dan FC adalah rusuk ($6$ cm), AC diagonal sisi ($6\sqrt{2}$ cm). Segitiga FAC adalah <strong>Segitiga Sama Kaki</strong>.</span>
+                                </label>
+                                <label class="flex items-start space-x-3 p-2.5 bg-white border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                                    <input type="radio" name="q1_option" value="opt3" class="mt-0.5 text-teal-600 focus:ring-teal-500">
+                                    <span class="text-slate-700">FA = FC = $6\sqrt{3}$ cm dan AC = $6$ cm. Segitiga FAC adalah <strong>Segitiga Sembarang</strong>.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="feedback-1" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+
+                        <!-- Actions: Submit & Hint Controls -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                            <button onclick="requestHint(1)" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-medium px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                <span>Butuh Bantuan? (<span id="hint-lvl-badge-1">Hint Level 1</span>)</span>
+                            </button>
+                            <button onclick="checkStep1()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2">
+                                <span>Cek Jawaban</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Hint Box Panel Container -->
+                        <div id="hint-box-1" class="hidden space-y-2 pt-2 border-t border-slate-100"></div>
+                    </div>
+                </div>
+
+                <!-- STEP 2 BOX -->
+                <div id="box-step-2" class="step-card bg-slate-100 rounded-2xl border border-slate-200 shadow-sm p-5 opacity-60 pointer-events-none transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <span class="step-badge w-8 h-8 rounded-xl bg-slate-400 text-white font-bold flex items-center justify-center text-sm">2</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">Box 2: Proyeksi Titik F ke Garis AC</h3>
+                                <p class="text-xs text-slate-500">Menentukan titik siku-siku acuan pada garis AC</p>
+                            </div>
+                        </div>
+                        <span id="badge-status-2" class="bg-slate-200 text-slate-600 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Terkunci</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Jika kita membuat titik <span class="font-bold text-amber-600">O</span> tepat berada di <strong>tengah-tengah garis AC</strong>, bagaimanakah posisi ruas garis <span class="font-bold text-amber-600">FO</span> terhadap garis <span class="font-bold text-blue-600">AC</span>?
+                        </p>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Lengkapi Pernyataan Berikut:</label>
+                            <p class="text-sm text-slate-700">
+                                Garis FO tegak lurus dengan AC ($\text{FO} \perp \text{AC}$), sehingga jarak titik F ke garis AC sama dengan panjang ruas garis 
+                                <select id="q2_select" class="inline-block mx-1 text-sm bg-white border border-slate-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-teal-500 font-semibold text-teal-700">
+                                    <option value="">-- Pilih Ruas Garis --</option>
+                                    <option value="FA">FA</option>
+                                    <option value="FO">FO</option>
+                                    <option value="FC">FC</option>
+                                    <option value="AO">AO</option>
+                                </select>
+                            </p>
+                        </div>
+
+                        <div id="feedback-2" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                            <button onclick="requestHint(2)" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-medium px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                <span>Butuh Bantuan? (<span id="hint-lvl-badge-2">Hint Level 1</span>)</span>
+                            </button>
+                            <button onclick="checkStep2()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2">
+                                <span>Cek Jawaban</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div id="hint-box-2" class="hidden space-y-2 pt-2 border-t border-slate-100"></div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 BOX -->
+                <div id="box-step-3" class="step-card bg-slate-100 rounded-2xl border border-slate-200 shadow-sm p-5 opacity-60 pointer-events-none transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <span class="step-badge w-8 h-8 rounded-xl bg-slate-400 text-white font-bold flex items-center justify-center text-sm">3</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">Box 3: Menghitung Panjang AO (Setengah AC)</h3>
+                                <p class="text-xs text-slate-500">Menentukan salah satu Sisi Siku-Siku pada Δ FOA</p>
+                            </div>
+                        </div>
+                        <span id="badge-status-3" class="bg-slate-200 text-slate-600 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Terkunci</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Karena O adalah titik tengah AC, maka $\text{AO} = \frac{1}{2} \times \text{AC}$. Diketahui dari Box 1 bahwa panjang $\text{AC} = 6\sqrt{2}\text{ cm}$. 
+                            Hitunglah nilai panjang <span class="font-bold text-teal-700">AO</span>!
+                        </p>
+
+                        <!-- Math Input Box with Quick Math Keyboard Buttons -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Masukkan Hasil Panjang AO:</label>
+                            
+                            <div class="flex items-center gap-2 max-w-xs">
+                                <span class="text-sm font-semibold text-slate-700">AO =</span>
+                                <input type="text" id="q3_input" placeholder="contoh: 3 akar 2 atau 3√2" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 font-mono font-medium text-slate-800">
+                                <span class="text-sm font-medium text-slate-500">cm</span>
+                            </div>
+
+                            <!-- Quick Math Symbol Keyboard -->
+                            <div class="flex items-center gap-1.5 pt-1">
+                                <span class="text-[11px] text-slate-500 font-medium">Simbol Cepat:</span>
+                                <button type="button" onclick="insertSymbol('q3_input', '√2')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√2</button>
+                                <button type="button" onclick="insertSymbol('q3_input', '√3')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√3</button>
+                                <button type="button" onclick="insertSymbol('q3_input', '√6')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√6</button>
+                            </div>
+                        </div>
+
+                        <div id="feedback-3" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                            <button onclick="requestHint(3)" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-medium px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                <span>Butuh Bantuan? (<span id="hint-lvl-badge-3">Hint Level 1</span>)</span>
+                            </button>
+                            <button onclick="checkStep3()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2">
+                                <span>Cek Jawaban</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div id="hint-box-3" class="hidden space-y-2 pt-2 border-t border-slate-100"></div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 BOX -->
+                <div id="box-step-4" class="step-card bg-slate-100 rounded-2xl border border-slate-200 shadow-sm p-5 opacity-60 pointer-events-none transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <span class="step-badge w-8 h-8 rounded-xl bg-slate-400 text-white font-bold flex items-center justify-center text-sm">4</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">Box 4: Kalkulasi Akhir Jarak FO (Pythagoras Δ FOA)</h3>
+                                <p class="text-xs text-slate-500">Perhitungan Teorema Pythagoras untuk hasil akhir</p>
+                            </div>
+                        </div>
+                        <span id="badge-status-4" class="bg-slate-200 text-slate-600 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Terkunci</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Perhatikan segitiga <span class="font-bold text-amber-600">FOA</span> yang siku-siku di titik <span class="font-bold text-amber-600">O</span>. 
+                            Gunakan rumusan Teorema Pythagoras: $\text{FO} = \sqrt{\text{FA}^2 - \text{AO}^2}$ dengan $\text{FA} = 6\sqrt{2}\text{ cm}$ dan $\text{AO} = 3\sqrt{2}\text{ cm}$.
+                        </p>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Hitung Panjang FO (Jarak Akhir Titik F ke Garis AC):</label>
+                            
+                            <div class="flex items-center gap-2 max-w-xs">
+                                <span class="text-sm font-semibold text-slate-700">FO =</span>
+                                <input type="text" id="q4_input" placeholder="contoh: 3 akar 6 atau 3√6" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 font-mono font-medium text-slate-800">
+                                <span class="text-sm font-medium text-slate-500">cm</span>
+                            </div>
+
+                            <div class="flex items-center gap-1.5 pt-1">
+                                <span class="text-[11px] text-slate-500 font-medium">Simbol Cepat:</span>
+                                <button type="button" onclick="insertSymbol('q4_input', '√2')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√2</button>
+                                <button type="button" onclick="insertSymbol('q4_input', '√3')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√3</button>
+                                <button type="button" onclick="insertSymbol('q4_input', '√6')" class="px-2 py-0.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">√6</button>
+                            </div>
+                        </div>
+
+                        <div id="feedback-4" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                            <button onclick="requestHint(4)" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-medium px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                <span>Butuh Bantuan? (<span id="hint-lvl-badge-4">Hint Level 1</span>)</span>
+                            </button>
+                            <button onclick="checkStep4()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2">
+                                <span>Selesaikan Asesmen</span>
+                                <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </div>
+
+                        <div id="hint-box-4" class="hidden space-y-2 pt-2 border-t border-slate-100"></div>
+                    </div>
+                </div>
+
+                <!-- Assessment Report Card (Hidden until finished) -->
+                <div id="reportCard" class="hidden bg-gradient-to-br from-teal-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl space-y-6 border border-teal-700">
+                    <div class="flex items-center justify-between border-b border-teal-700/60 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-3 bg-teal-500/20 rounded-xl text-teal-300 border border-teal-500/30">
+                                <i class="fa-solid fa-award text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Laporan Ketuntasan Asesmen Formatif</h3>
+                                <p class="text-xs text-teal-200">Hasil Scaffolded-Box Learning dengan Hint Option</p>
+                            </div>
+                        </div>
+                        <span class="bg-teal-500/20 text-teal-300 border border-teal-500/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tuntas</span>
+                    </div>
+
+                    <!-- Summary Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                            <span class="block text-[11px] text-teal-200 uppercase font-semibold">Status</span>
+                            <span class="text-sm font-bold text-emerald-400 mt-1 block"><i class="fa-solid fa-circle-check mr-1"></i>100% TUNTAS</span>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                            <span class="block text-[11px] text-teal-200 uppercase font-semibold">Total Hint Buka</span>
+                            <span id="reportTotalHints" class="text-lg font-bold text-amber-300 mt-1 block">0 Hint</span>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                            <span class="block text-[11px] text-teal-200 uppercase font-semibold">Tingkat Mandiri</span>
+                            <span id="reportIndependence" class="text-sm font-bold text-cyan-300 mt-1 block">Tinggi</span>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                            <span class="block text-[11px] text-teal-200 uppercase font-semibold">Hasil Akhir FO</span>
+                            <span class="text-base font-mono font-bold text-teal-300 mt-1 block">3√6 cm</span>
+                        </div>
+                    </div>
+
+                    <!-- Diagnostic & Reflection Note -->
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2">
+                        <h4 class="text-xs font-bold text-teal-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line"></i> Analisis & Rekomendasi Guru:
+                        </h4>
+                        <p id="reportFeedbackText" class="text-xs text-slate-300 leading-relaxed">
+                            Selamat! Anda berhasil menyelesaikan asesmen formatif ini tanpa mengalami *zero-response* (kebuntuan).
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button onclick="resetAssessment()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-4 py-2.5 rounded-xl border border-slate-600 transition flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>Ulangi Asesmen</span>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // State Management
+        const state = {
+            currentStep: 1,
+            completedSteps: [false, false, false, false],
+            hintLevel: [0, 0, 0, 0], // Tracks hint level accessed for step 1..4 (0..3)
+            totalHintsUsed: 0,
+            showHighlightTri: true
+        };
+
+        // Hint Content Database (Multi-level Scaffolding)
+        const hintsDB = {
+            1: [
+                { lvl: 1, title: "Hint 1 (Konseptual)", text: "Ingat kembali: Ruas garis FA, FC, dan AC terletak pada muka-muka kubus (AFEB, CGFB, dan ABCD). Ketiganya merupakan diagonal sisi kubus." },
+                { lvl: 2, title: "Hint 2 (Operasional)", text: "Rumus diagonal sisi kubus dengan rusuk s adalah s√2. Karena rusuk s = 6 cm, maka panjang FA = FC = AC = 6√2 cm." },
+                { lvl: 3, title: "Hint 3 (Jawaban Parsial)", text: "Karena ketiga sisinya memilki panjang yang persis sama (6√2 cm), maka segitiga FAC tergolong Segitiga Sama Sisi." }
+            ],
+            2: [
+                { lvl: 1, title: "Hint 1 (Konseptual)", text: "Jarak titik ke garis didefinisikan sebagai panjang garis tegak lurus (siku-siku 90°) dari titik tersebut ke garis tujuan." },
+                { lvl: 2, title: "Hint 2 (Operasional)", text: "Pada segitiga sama sisi FAC, garis tinggi dari titik puncak F akan membagi sisi alas AC menjadi dua bagian yang persis sama di titik tengah O." },
+                { lvl: 3, title: "Hint 3 (Jawaban Parsial)", text: "Oleh karena itu, garis tinggi yang tegak lurus dengan AC adalah ruas garis FO." }
+            ],
+            3: [
+                { lvl: 1, title: "Hint 1 (Konseptual)", text: "Titik O berada tepat di tengah-tengah AC. Maka panjang AO adalah setengah dari panjang total AC." },
+                { lvl: 2, title: "Hint 2 (Operasional)", text: "AO = 1/2 × AC. Masukkan nilai AC = 6√2 cm ke dalam perkalian tersebut." },
+                { lvl: 3, title: "Hint 3 (Jawaban Parsial)", text: "AO = 1/2 × 6√2 = 3√2 cm." }
+            ],
+            4: [
+                { lvl: 1, title: "Hint 1 (Konseptual)", text: "Pada segitiga FOA (siku-siku di O), Sisi miring (hipotenusa) adalah FA, sedangkan sisi alas adalah AO. Tinggi segitiga adalah FO." },
+                { lvl: 2, title: "Hint 2 (Operasional)", text: "Gunakan rumus FO = √(FA² - AO²). FA² = (6√2)² = 72, dan AO² = (3√2)² = 18." },
+                { lvl: 3, title: "Hint 3 (Jawaban Parsial)", text: "FO = √(72 - 18) = √54. Sederhanakan √54 = √(9 × 6) = 3√6 cm." }
+            ]
+        };
+
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initCubeCanvas();
+            setupAccordion();
+        });
+
+        // Helper: Quick Math Keyboard Symbol Inserter
+        function insertSymbol(inputId, symbol) {
+            const el = document.getElementById(inputId);
+            if (el) {
+                el.value += symbol;
+                el.focus();
+            }
+        }
+
+        // Accordion Toggle
+        function setupAccordion() {
+            const btn = document.getElementById('accordionToggle');
+            const content = document.getElementById('accordionContent');
+            const icon = document.getElementById('accordionIcon');
+
+            btn.addEventListener('click', () => {
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        }
+
+        function requestHint(step) {
+            const stepIdx = step - 1;
+            const currentLvl = state.hintLevel[stepIdx];
+
+            if (currentLvl < 3) {
+                state.hintLevel[stepIdx]++;
+                state.totalHintsUsed++;
+                updateHeaderMetrics();
+
+                const hintData = hintsDB[step][state.hintLevel[stepIdx] - 1];
+                renderHintBox(step, hintData);
+            }
+
+            // Update button badge text
+            const badge = document.getElementById(`hint-lvl-badge-${step}`);
+            if (badge) {
+                if (state.hintLevel[stepIdx] >= 3) {
+                    badge.innerText = "Semua Hint Terbuka";
+                } else {
+                    badge.innerText = `Hint Level ${state.hintLevel[stepIdx] + 1}`;
+                }
+            }
+        }
+
+        function renderHintBox(step, hintData) {
+            const hintContainer = document.getElementById(`hint-box-${step}`);
+            hintContainer.classList.remove('hidden');
+
+            const hintCard = document.createElement('div');
+            hintCard.className = "bg-amber-50/80 border-l-4 border-amber-400 p-3 rounded-r-lg text-xs space-y-1 animate-fade-in";
+            hintCard.innerHTML = `
+                <div class="font-bold text-amber-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> ${hintData.title}
+                </div>
+                <p class="text-amber-800 leading-relaxed">${hintData.text}</p>
+            `;
+            hintContainer.appendChild(hintCard);
+        }
+
+        // Step 1 Validation
+        function checkStep1() {
+            const selected = document.querySelector('input[name="q1_option"]:checked');
+            const feedback = document.getElementById('feedback-1');
+
+            if (!selected) {
+                showFeedback(feedback, 'warning', 'Pilih salah satu jawaban terlebih dahulu!');
+                return;
+            }
+
+            if (selected.value === 'opt1') {
+                showFeedback(feedback, 'success', 'Tepat sekali! FA, FC, dan AC ketiganya adalah diagonal sisi kubus (6√2 cm), sehingga Δ FAC adalah segitiga sama sisi.');
+                completeStep(1);
+                unlockStep(2);
+            } else {
+                showFeedback(feedback, 'error', 'Jawaban belum tepat. Coba perhatikan posisi garis FA, FC, dan AC pada dinding-dinding kubus. Masing-masing adalah diagonal sisi!');
+            }
+        }
+
+        // Step 2 Validation
+        function checkStep2() {
+            const val = document.getElementById('q2_select').value;
+            const feedback = document.getElementById('feedback-2');
+
+            if (!val) {
+                showFeedback(feedback, 'warning', 'Pilih ruas garis terlebih dahulu!');
+                return;
+            }
+
+            if (val === 'FO') {
+                showFeedback(feedback, 'success', 'Benar! Garis FO menghubungkan puncak F ke titik tengah O pada alas AC dan membentuk sudut tegak lurus (90°).');
+                completeStep(2);
+                unlockStep(3);
+            } else {
+                showFeedback(feedback, 'error', 'Masih belum tepat. Garis tinggi proyeksi yang tegak lurus dari titik F ke titik tengah O adalah FO.');
+            }
+        }
+
+        // Step 3 Validation
+        function checkStep3() {
+            const val = document.getElementById('q3_input').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback-3');
+
+            if (!val) {
+                showFeedback(feedback, 'warning', 'Ketikkan jawaban Anda terlebih dahulu!');
+                return;
+            }
+
+            // Flexibly match "3√2", "3 akar 2", "3v2", "3 sqrt 2"
+            const isValid = val.includes('3') && (val.includes('√2') || val.includes('akar 2') || val.includes('sqrt 2') || val.includes('v2'));
+
+            if (isValid) {
+                showFeedback(feedback, 'success', 'Sempurna! Panjang AO = 1/2 × 6√2 = 3√2 cm.');
+                completeStep(3);
+                unlockStep(4);
+            } else {
+                showFeedback(feedback, 'error', 'Jawaban kurang tepat. Hitunglah 1/2 dikali dengan 6√2.');
+            }
+        }
+
+        // Step 4 Validation
+        function checkStep4() {
+            const val = document.getElementById('q4_input').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback-4');
+
+            if (!val) {
+                showFeedback(feedback, 'warning', 'Ketikkan jawaban hasil akhir Anda!');
+                return;
+            }
+
+            // Flexibly match "3√6", "3 akar 6", "3v6", "3 sqrt 6"
+            const isValid = val.includes('3') && (val.includes('√6') || val.includes('akar 6') || val.includes('sqrt 6') || val.includes('v6'));
+
+            if (isValid) {
+                showFeedback(feedback, 'success', 'Luar Biasa! Hasil FO = √(72 - 18) = √54 = 3√6 cm.');
+                completeStep(4);
+                finishAssessment();
+            } else {
+                showFeedback(feedback, 'error', 'Hitungan belum tepat. Coba periksa kembali: FO² = (6√2)² - (3√2)² = 72 - 18 = 54.');
+            }
+        }
+
+        // Feedback Display Helper
+        function showFeedback(el, type, message) {
+            el.classList.remove('hidden', 'bg-rose-50', 'text-rose-800', 'border-rose-200', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-amber-50', 'text-amber-800', 'border-amber-200');
+            el.classList.add('border');
+
+            if (type === 'success') {
+                el.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+                el.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i> ${message}`;
+            } else if (type === 'error') {
+                el.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+                el.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 mr-1.5"></i> ${message}`;
+            } else {
+                el.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200');
+                el.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i> ${message}`;
+            }
+        }
+
+        function completeStep(step) {
+            state.completedSteps[step - 1] = true;
+            
+            // UI Step Card Completed Style
+            const box = document.getElementById(`box-step-${step}`);
+            box.classList.remove('border-teal-500');
+            box.classList.add('border-emerald-400', 'bg-emerald-50/20');
+
+            const badge = document.getElementById(`badge-status-${step}`);
+            badge.className = "bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs px-2.5 py-1 rounded-md font-bold flex items-center gap-1";
+            badge.innerHTML = '<i class="fa-solid fa-check"></i> Selesai';
+
+            const stepBadge = box.querySelector('.step-badge');
+            if (stepBadge) {
+                stepBadge.classList.remove('bg-teal-600', 'bg-slate-400');
+                stepBadge.classList.add('bg-emerald-600');
+            }
+
+            updateHeaderMetrics();
+        }
+
+        function unlockStep(nextStep) {
+            state.currentStep = nextStep;
+            const nextBox = document.getElementById(`box-step-${nextStep}`);
+            nextBox.classList.remove('opacity-60', 'pointer-events-none', 'bg-slate-100');
+            nextBox.classList.add('bg-white', 'border-2', 'border-teal-500', 'shadow-md');
+
+            const badge = document.getElementById(`badge-status-${nextStep}`);
+            badge.className = "bg-teal-50 text-teal-700 border border-teal-200 text-xs px-2.5 py-1 rounded-md font-semibold";
+            badge.innerText = "Sedang Dikerjakan";
+
+            const stepBadge = nextBox.querySelector('.step-badge');
+            if (stepBadge) {
+                stepBadge.classList.remove('bg-slate-400');
+                stepBadge.classList.add('bg-teal-600');
+            }
+
+            // Smooth Scroll into view
+            setTimeout(() => {
+                nextBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function updateHeaderMetrics() {
+            const completedCount = state.completedSteps.filter(Boolean).length;
+            
+            // Progress Bar
+            const percent = (completedCount / 4) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressText').innerText = `${completedCount} / 4 Step`;
+
+            // Hint Counter
+            document.getElementById('hintCountBadge').innerText = state.totalHintsUsed;
+
+            // Global Status
+            const statusBadge = document.getElementById('statusBadge');
+            if (completedCount === 4) {
+                statusBadge.className = "bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs px-2.5 py-1.5 rounded-lg font-bold flex items-center space-x-1.5";
+                statusBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>Tuntas</span>';
+            } else if (completedCount > 0) {
+                statusBadge.className = "bg-amber-100 text-amber-800 border border-amber-300 text-xs px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5";
+                statusBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Dalam Progres</span>';
+            }
+        }
+
+        function finishAssessment() {
+            const report = document.getElementById('reportCard');
+            report.classList.remove('hidden');
+
+            document.getElementById('reportTotalHints').innerText = `${state.totalHintsUsed} Hint`;
+
+            let independenceLevel = "Sangat Tinggi (Kemandirian Optimal)";
+            let feedback = "Luar biasa! Anda memahami konsep proyeksi dimensi tiga dan Teorema Pythagoras secara mandiri dengan sangat baik tanpa banyak bantuan hint.";
+
+            if (state.totalHintsUsed >= 6) {
+                independenceLevel = "Perlu Bimbingan Tambahan";
+                feedback = "Anda telah menyelesaikan tugas dengan baik melalui bantuan hint bertingkat. Disarankan untuk melatih kembali soal serupa secara mandiri.";
+            } else if (state.totalHintsUsed >= 3) {
+                independenceLevel = "Sedang (Cukup Mandiri)";
+                feedback = "Bagus! Anda memanfaatkan scaffolding hint secara efisien saat mengalami keraguan untuk mencapai ketuntasan belajar.";
+            }
+
+            document.getElementById('reportIndependence').innerText = independenceLevel;
+            document.getElementById('reportFeedbackText').innerText = feedback;
+
+            setTimeout(() => {
+                report.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function resetAssessment() {
+            window.location.reload();
+        }
+
+        function initCubeCanvas() {
+            const canvas = document.getElementById('cubeCanvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * window.devicePixelRatio;
+                canvas.height = rect.height * window.devicePixelRatio;
+                width = canvas.width;
+                height
